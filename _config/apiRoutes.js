@@ -8,5 +8,6 @@ export default {
   urlBase : urlBase,
   version: moduleVersion,
   google: `${urlBase}/analytics`,
+  marketplace: `${urlBase}/marketplace`,
 
 }
