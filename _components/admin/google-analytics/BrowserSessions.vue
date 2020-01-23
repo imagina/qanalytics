@@ -23,7 +23,14 @@
          startDate: {default: Date.now()},
          endDate: {default: null}
       },
-      watch: {},
+      watch: {
+         startDate() {
+            this.init()
+         },
+         endDate() {
+            this.init()
+         }
+      },
       data() {
          return {
             loading: false,

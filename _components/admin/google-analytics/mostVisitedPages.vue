@@ -10,6 +10,7 @@
             </div>
             <div class="col-12 q-pa-lg">
                <q-table
+                       v-if="loading"
                        :data="tableOptions.data"
                        :columns="tableOptions.columns"
                        row-key="pageTitle"
@@ -29,7 +30,14 @@
          startDate: {default: Date.now()},
          endDate: {default: null}
       },
-      watch: {},
+      watch: {
+         startDate() {
+            this.init()
+         },
+         endDate() {
+            this.init()
+         }
+      },
       data() {
          return {
             loading: false,
