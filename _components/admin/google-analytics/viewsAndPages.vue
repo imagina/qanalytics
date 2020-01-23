@@ -1,17 +1,34 @@
 <template>
-   <div>
-      <chart :options="chartOptionsBase" style=" height:430px;"/>
-   </div>
+   <q-card class="rounded-md q-ma-sm">
+      <div class="q-container">
+         <div class="row box">
+            <div class="col-12 q-pa-md">
+               <div class="text-h6 q-mb-lg"><i aria-hidden="true"
+                                               class="material-icons q-icon q-mr-sm icon-sm">event</i>
+                  Visitantes y paginas vistas
+               </div>
+            </div>
+            <div class="col-12 q-pa-lg">
+               <chart :options="chartOptions" style=" height:430px;"/>
+            </div>
+         </div>
+      </div>
+   </q-card>
 </template>
 
 <script>
 
    export default {
       name: 'visitors-pages',
+      props: {
+         startDate: {default: Date.now()},
+         endDate: {default: null}
+      },
+      watch: {},
       data() {
          return {
             loading: false,
-            chartOptionsBase: {
+            chartOptions: {
                chart: {
                   type: 'column',
                   backgroundColor: null,
@@ -19,18 +36,7 @@
                title: {
                   text: '',
                },
-               xAxis: {
-                  categories: [
-                     'Ene',
-                     'Feb',
-                     'Mar',
-                     'Abr',
-                     'May',
-                     'Jun',
-                     'Jul',
-                     'Ago',
-                     'Sep',
-                  ], //Answers
+               xAxis: {//Answers
                   title: {
                      text: null,
                      style: {
@@ -59,7 +65,7 @@
                credits: {
                   enabled: false
                },
-               colors: ['#f96353'],
+               colors: ['#fd2d5e', '#f2c037', '#f96353'],
                series: []
 
             }
@@ -82,21 +88,23 @@
                let params = {
                   params: {
                      filter: {
-                        visitorsAndPages: true,
+                        visitorsAndPage: true,
+                        startDate: this.startDate,
+                        endDate: this.endDate,
                      }
                   }
                }
                this.$crud.index('apiRoutes.qanalytics.google', params).then(response => {
                   let data = response.data.visitors
-                  this.chartOptionsBase.xAxis.dates = data.dates
+                  this.chartOptions.xAxis.categories = data.dates
                   this.chartOptions.series = [
                      {
                         name: 'Visitantes',
                         data: data.visitors
                      },
                      {
-                        name:'pages',
-                        data:data.pageViews
+                        name: 'Paginas Vistas',
+                        data: data.pageViews
                      }
                   ]
                   resolve(true)//Resolve

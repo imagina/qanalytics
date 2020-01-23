@@ -1,7 +1,5 @@
 
 # Ignore everything
-.idea
-.idea/*
 #src
 
 #other fields
@@ -12,3 +10,4 @@
 !/.babelrc
 !/.postcssrc.js
 !/babel.config.js
+/.idea/
